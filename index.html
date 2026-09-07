@@ -30,6 +30,7 @@ body{
     background:#f7faf7;
     color:#173d20;
     line-height:1.6;
+    overflow-x:hidden;
 }
 
 img{
@@ -89,11 +90,8 @@ select{
     margin:auto;
 
     display:flex;
+    justify-content:space-between;
     align-items:center;
-}
-
-.nav-container > img{
-    margin-right:8px;
 }
 
 .logo{
@@ -111,7 +109,6 @@ select{
     display:flex;
     align-items:center;
     gap:25px;
-    margin-left:auto;
 }
 
 .nav-links > li{
@@ -953,7 +950,7 @@ section{
 
 .contact-grid{
     display:grid;
-    grid-template-columns:1fr 1fr;
+    grid-template-columns:1fr;
     gap:60px;
 }
 
@@ -1197,6 +1194,32 @@ footer a:hover{
 
 @media(max-width:600px){
 
+    .nav-container{
+        width:92%;
+        min-height:70px;
+    }
+
+    .navbar .nav-container > img{
+        width:52px;
+        height:auto;
+        object-fit:contain;
+    }
+
+    .logo{
+        margin-right:auto;
+        font-size:15px;
+        line-height:1.2;
+    }
+
+    .menu-toggle{
+        font-size:25px;
+        padding:6px;
+    }
+
+    .nav-links{
+        top:70px;
+    }
+
     section{
         padding:70px 0;
     }
@@ -1206,7 +1229,8 @@ footer a:hover{
     }
 
     .hero h1{
-        font-size:48px;
+        font-size:clamp(38px,11vw,48px);
+        letter-spacing:-1.5px;
     }
 
     .hero p{
@@ -1243,6 +1267,25 @@ footer a:hover{
 
     .contact h2{
         font-size:37px;
+    }
+
+    .hero-buttons,
+    .hero-buttons .btn,
+    .contact-form .btn{
+        width:100%;
+    }
+
+    .contact-form{
+        padding:25px 20px;
+    }
+
+    .experience{
+        width:165px;
+        padding:20px;
+    }
+
+    .experience strong{
+        font-size:34px;
     }
 
 }
@@ -2710,8 +2753,8 @@ Contact Us
 
 <div>
     <span class="contact-icon" aria-hidden="true">✉</span>
-    <a href="mailto:modawasonAgrotechenterprise@gmail.com">
-         modawasonAgrotechenterprise@gmail.com
+    <a href="mailto:modawasonAgrotech@gmail.com">
+         modawasonAgrotech@gmail.com
      </a>
 </div>
 
@@ -2732,7 +2775,7 @@ Contact Us
  
  <div>
     <img class="contact-icon" src="https://cdn.simpleicons.org/tiktok" alt="" width="20" height="20">
-    <a href="https://www.tiktok.com/@modawasonagrotech" target="_blank" rel="noopener noreferrer">
+    <a href="https://www.tiktok.com/@modawa%26sonagrotech" target="_blank" rel="noopener noreferrer">
          TikTok: @modawaandsonagrotech
     </a>
  </div>
@@ -2752,118 +2795,6 @@ Contact Us
 </div>
 
 
-
-<div class="contact-form reveal">
-
-<form
-    id="contactForm"
-    action="https://formsubmit.co/modawasonAgrotech@gmail.com"
-    method="POST">
-
-<input type="hidden" name="_subject" value="New inquiry from Modawa & Son Agrotech website">
-<input type="hidden" name="_replyto" id="replyTo">
-<input type="hidden" name="_captcha" value="false">
-<input type="hidden" name="_template" value="table">
-<input type="text" name="_honey" style="display:none" tabindex="-1" autocomplete="off">
-
-
-<div class="form-group">
-
-<label>
-    Full Name
-</label>
-
-<input
-type="text"
-id="name"
-name="name"
-placeholder="Enter your name"
-required>
-
-</div>
-
-
-<div class="form-group">
-
-<label>
-    Email Address
-</label>
-
-<input
-type="email"
-id="email"
-name="email"
-placeholder="Enter your email"
-required>
-
-</div>
-
-
-<div class="form-group">
-
-<label>
-    I am interested in
-</label>
-
-<select id="interest" name="interest">
-
-<option>
-Farmer Partnership
-</option>
-
-<option>
-Commodity Trading
-</option>
-
-<option>
-Warehousing
-</option>
-
-<option>
-Market Access
-</option>
-
-<option>
-Investment Partnership
-</option>
-
-<option>
-General Inquiry
-</option>
-
-</select>
-
-</div>
-
-
-<div class="form-group">
-
-<label>
-    Message
-</label>
-
-<textarea
-id="message"
-name="message"
-placeholder="Write your message..."
-required></textarea>
-
-</div>
-
-
-<button
-type="submit"
-class="btn btn-primary">
-
-Send Message
-
-</button>
-
-<p id="formStatus" role="status" aria-live="polite"></p>
-
-</form>
-
-</div>
 
 </div>
 
@@ -3251,66 +3182,6 @@ document.querySelectorAll(".faq-question")
         : "+";
 
     });
-
-});
-
-
-/* =========================================================
-   CONTACT FORM
-========================================================= */
-
-const contactForm =
-document.getElementById("contactForm");
-
-const formStatus =
-document.getElementById("formStatus");
-
-const submitButton =
-contactForm.querySelector("button[type='submit']");
-
-contactForm.addEventListener("submit", async function(e){
-
-    e.preventDefault();
-
-    submitButton.disabled = true;
-    submitButton.textContent = "Sending...";
-    formStatus.textContent = "";
-
-    document.getElementById("replyTo").value =
-    document.getElementById("email").value;
-
-    try{
-
-        const response = await fetch(contactForm.action.replace(
-            "https://formsubmit.co/",
-            "https://formsubmit.co/ajax/"
-        ), {
-            method: "POST",
-            body: new FormData(contactForm),
-            headers: {
-                Accept: "application/json"
-            }
-        });
-
-        if(!response.ok){
-            throw new Error("Message not sent");
-        }
-
-        formStatus.textContent = "Your message was sent successfully.";
-        formStatus.style.color = "#1f6b35";
-        contactForm.reset();
-
-    }catch(error){
-
-        formStatus.textContent = "Message could not be sent. Please try again or contact us directly.";
-        formStatus.style.color = "#c62828";
-
-    }finally{
-
-        submitButton.disabled = false;
-        submitButton.textContent = "Send Message";
-
-    }
 
 });
 
